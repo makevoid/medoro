@@ -33,7 +33,7 @@ class Medoro < Sinatra::Base
 
   get "/photos.json" do
     content_type :json
-    photos = Dir.glob("#{APP_PATH}/public/photos/**/*.*")
+    photos = Dir.glob("#{APP_PATH}/public/photos/**/*.*").sort
     photos.map do |photo|
       path = "/photos/#{photo.split("/")[-2]}/#{File.basename photo}"
     end.to_json

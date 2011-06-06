@@ -37,16 +37,15 @@
       }, 1200, gallery.startAnimation);
     };
     Gallery.prototype.draw = function(idx) {
-      var img;
+      var img, last;
       this.current = idx;
       img = "<img src='" + this.photos[this.current] + "'>";
       $("#photos").append(img);
+      last = $("#photos img").last();
+      last.css({
+        opacity: 0
+      });
       $(img).load(function() {
-        var last;
-        last = $("#photos img").last();
-        last.css({
-          opacity: 0
-        });
         return gallery.fadeIn();
       });
       return false;

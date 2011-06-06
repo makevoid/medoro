@@ -11,14 +11,12 @@ class Gallery
     this.photos = data
     this.draw 0
     
-  
   startAnimation: ->
     if $("#photos img").length > 1
       first = $("#photos img").first()
       first.remove()
     setTimeout( gallery.next, 6000)
     
-  
   next: -> 
     gallery.draw gallery.current+1
   
@@ -33,11 +31,11 @@ class Gallery
     this.current = idx
     img = "<img src='#{this.photos[this.current]}'>"
     $("#photos").append img
+  
+    last = $("#photos img").last()
+    last.css { opacity: 0 }
     $(img).load ->
-      last = $("#photos img").last()
-      last.css { opacity: 0 }
       gallery.fadeIn()
-      
     false
 
 
