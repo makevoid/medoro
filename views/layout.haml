@@ -16,12 +16,18 @@
           %h1 
             Gianni Medoro
             %span Architetto di Giardini e Paesaggio
+        %p.info Via Vittorio Emanuele II, 124 - Tel: +39 055 474283 - 50134 FIRENZE
         %nav
         #content
           = yield
         .clear
         %footer
-          %p Via Vittorio Emanuele II, 124 - Tel: +39 055 474283 - 50134 FIRENZE - Partita IVA n. 00637240698
+          %p
+            P.IVA 00637240698
+          %p
+            created by:
+            - link_to "makevoid", "http://makevoid.com"
+          
       %script{ src: "/js/jquery.js", type: "text/javascript" }    
       %script{ src: "/js/coffee/medoro.js", type: "text/javascript" }
       - if ENV["RACK_ENV"] == "production"
