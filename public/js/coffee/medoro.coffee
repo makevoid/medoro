@@ -1,9 +1,8 @@
 class Gallery
   constructor: (@path) ->
-    console.log "Initializing: #{@path}"
+    #console.log "Initializing: #{@path}"
     
   load: ->
-    console.log "aasdasd"
     $.getJSON @path, (data) ->
       gallery.loaded(data)
       
@@ -11,14 +10,14 @@ class Gallery
     this.photos = data
     this.draw 0
     
-  startAnimation: ->
-    if $("#photos img").length > 1
-      first = $("#photos img").first()
-      first.remove()
+  startAnimation: ->    
     setTimeout( gallery.next, 6000)
     
   next: -> 
     gallery.draw gallery.current+1
+  
+  removeFirst: ->
+    $("#photos img").first().remove()
   
   removeImage: (img) ->
     img.remove()
@@ -26,6 +25,9 @@ class Gallery
   fadeIn: ->
     last = $("#photos img").last()
     last.animate {opacity: 1}, 1200, gallery.startAnimation  
+    if $("#photos img").length > 1
+      first = $("#photos img").first()
+      first.animate { opacity: 0, boxShadow: 0 }, 1200, this.removeFirst
   
   draw: (idx) ->
     this.current = idx
