@@ -1,45 +1,62 @@
 class Gallery
   constructor: (@path) ->
+    @photos = []
+    @current = 0
     #console.log "Initializing: #{@path}"
     
   load: ->
+    self = this
     $.getJSON @path, (data) ->
-      gallery.loaded(data)
+      self.loaded(data)
       
   loaded: (data) ->
-    this.photos = data
-    this.draw 0
+    @photos = data
+    this.draw()
+    @current += 1
     
   startAnimation: ->    
-    setTimeout( gallery.next, 6000)
+    self = this
+    setTimeout( -> 
+      self.next()
+    , 10)
+    # , 2000)
     
-  next: -> 
-    gallery.draw gallery.current+1
-  
+  next: ->   
+    # console.log @current, @photos.length 
+    if @current < @photos.length 
+      this.draw(true)
+    else
+      @current = 0
+      this.draw(true)
+    
   removeFirst: ->
     $("#photos img").first().remove()
   
   removeImage: (img) ->
     img.remove()
   
-  fadeIn: ->
+  fadeIn: ->  
+    self = this
     last = $("#photos img").last()
-    last.animate {opacity: 1}, 1200, gallery.startAnimation  
+    last.animate {opacity: 1}, 1200, -> self.startAnimation()
     if $("#photos img").length > 1
       first = $("#photos img").first()
       first.animate { opacity: 0, boxShadow: 0 }, 1200, this.removeFirst
   
-  draw: (idx) ->
-    this.current = idx
-    img = "<img src='#{this.photos[this.current]}'>"
+  draw: (incr) ->
+    img_path = @photos[@current]
+    @current += 1 if incr
+    # console.log img_path
+    img = "<img src='#{img_path}'>"
     $("#photos").append img
   
     last = $("#photos img").last()
     last.css { opacity: 0 }
+    self = this
     $(img).load ->
-      gallery.fadeIn()
+      self.fadeIn()
     false
 
 
-gallery = new Gallery "/photos.json"
+window.gallery = new Gallery "/photos.json"
 gallery.load()

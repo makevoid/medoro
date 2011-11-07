@@ -1,23 +1,37 @@
 (function() {
-  var Gallery, gallery;
+  var Gallery;
   Gallery = (function() {
     function Gallery(path) {
       this.path = path;
+      this.photos = [];
+      this.current = 0;
     }
     Gallery.prototype.load = function() {
+      var self;
+      self = this;
       return $.getJSON(this.path, function(data) {
-        return gallery.loaded(data);
+        return self.loaded(data);
       });
     };
     Gallery.prototype.loaded = function(data) {
       this.photos = data;
-      return this.draw(0);
+      this.draw();
+      return this.current += 1;
     };
     Gallery.prototype.startAnimation = function() {
-      return setTimeout(gallery.next, 6000);
+      var self;
+      self = this;
+      return setTimeout(function() {
+        return self.next();
+      }, 10);
     };
     Gallery.prototype.next = function() {
-      return gallery.draw(gallery.current + 1);
+      if (this.current < this.photos.length) {
+        return this.draw(true);
+      } else {
+        this.current = 0;
+        return this.draw(true);
+      }
     };
     Gallery.prototype.removeFirst = function() {
       return $("#photos img").first().remove();
@@ -26,11 +40,14 @@
       return img.remove();
     };
     Gallery.prototype.fadeIn = function() {
-      var first, last;
+      var first, last, self;
+      self = this;
       last = $("#photos img").last();
       last.animate({
         opacity: 1
-      }, 1200, gallery.startAnimation);
+      }, 1200, function() {
+        return self.startAnimation();
+      });
       if ($("#photos img").length > 1) {
         first = $("#photos img").first();
         return first.animate({
@@ -39,22 +56,26 @@
         }, 1200, this.removeFirst);
       }
     };
-    Gallery.prototype.draw = function(idx) {
-      var img, last;
-      this.current = idx;
-      img = "<img src='" + this.photos[this.current] + "'>";
+    Gallery.prototype.draw = function(incr) {
+      var img, img_path, last, self;
+      img_path = this.photos[this.current];
+      if (incr) {
+        this.current += 1;
+      }
+      img = "<img src='" + img_path + "'>";
       $("#photos").append(img);
       last = $("#photos img").last();
       last.css({
         opacity: 0
       });
+      self = this;
       $(img).load(function() {
-        return gallery.fadeIn();
+        return self.fadeIn();
       });
       return false;
     };
     return Gallery;
   })();
-  gallery = new Gallery("/photos.json");
+  window.gallery = new Gallery("/photos.json");
   gallery.load();
 }).call(this);
