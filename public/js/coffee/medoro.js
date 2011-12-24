@@ -23,7 +23,7 @@
       self = this;
       return setTimeout(function() {
         return self.next();
-      }, 10);
+      }, 5000);
     };
     Gallery.prototype.next = function() {
       if (this.current < this.photos.length) {

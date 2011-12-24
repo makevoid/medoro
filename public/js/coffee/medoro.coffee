@@ -18,8 +18,7 @@ class Gallery
     self = this
     setTimeout( -> 
       self.next()
-    , 10)
-    # , 2000)
+    , 5000)
     
   next: ->   
     # console.log @current, @photos.length 

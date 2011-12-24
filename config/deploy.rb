@@ -1,8 +1,7 @@
 
 set :application, "medoro"
 
-#set :domain, "kim.makevoid.com" # old: krikri.makevoid.com
-set :domain,      "ovh.makevoid.com"
+set :domain,      "new.makevoid.com"
 
 # git
 
