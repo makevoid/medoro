@@ -17,9 +17,7 @@ class Medoro < Sinatra::Base
   end
 
   set :haml, { :format => :html5 }
-  require 'rack-flash'
   enable :sessions
-  use Rack::Flash, sweep: true
   set :method_override, true
 
   get "/" do
