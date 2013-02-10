@@ -10,21 +10,17 @@ require "#{path}/config/env"
 
 class Medoro < Sinatra::Base
   require "#{APP_PATH}/config/env"
-  
-  
+
+
   configure :development do # this way you can use thin, shotgun is so slow...
-    register Sinatra::Reloader
-    also_reload ["controllers/*.rb", "models/*.rb"]
     set :public, "public"
     set :static, true
   end
-  
+
   set :haml, { :format => :html5 }
   require 'rack-flash'
   enable :sessions
   use Rack::Flash, sweep: true
-  require 'sinatra/content_for'
-  helpers Sinatra::ContentFor
   set :method_override, true
 
   get "/" do
@@ -38,10 +34,10 @@ class Medoro < Sinatra::Base
       path = "/photos/#{photo.split("/")[-2]}/#{File.basename photo}"
     end.to_json
   end
-  
+
   get '/css/main.css' do
     sass :main
-  end  
-    
-    
+  end
+
+
 end
