@@ -13,7 +13,7 @@ set :scm, "git"
 set :branch, "master"
 set :deploy_via, :remote_cache
 
-set :password, File.read("/Users/makevoid/.password").strip
+set :password, File.read(File.expand_path "~/.password").strip
 
 
 set :user,        "www-data"
