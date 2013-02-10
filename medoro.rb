@@ -13,7 +13,7 @@ class Medoro < Sinatra::Base
 
   configure :development do # this way you can use thin, shotgun is so slow...
     set :public, "public"
-    set :static, true
+    #set :static, true
   end
 
   set :haml, { :format => :html5 }
@@ -32,9 +32,9 @@ class Medoro < Sinatra::Base
     end.to_json
   end
 
-  get '/css/main.css' do
-    sass :main
-  end
+  #get '/css/main.css' do
+  #  sass :main
+  #end
 
 
 end

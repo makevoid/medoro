@@ -9,8 +9,15 @@ This can be the base of some showcase site or can be integrated in your more com
 feel free to fork it if you like it!
 
 
+### compile css:
+
+    sass views/main.sass > public/css/main.css
+
+todo: use guard-sass
+
 ### TODO:
 
 - check if $.browser.webkit || $browser.firefox and use CSS transitions
+
 
 
